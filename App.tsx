@@ -1,12 +1,11 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import {SignUp} from './src/screens/SignUp';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import Routes from './src/Routes';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#0f1f01" />
-      <SignUp />
+      <Routes />
     </SafeAreaView>
   );
 };

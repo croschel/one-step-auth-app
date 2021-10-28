@@ -4,9 +4,8 @@ import {View} from 'react-native';
 
 import {styles} from './styles';
 import {firebaseApi} from '../../services/axios';
-import GoBackFloat from '../../Components/GoBackFloat';
 
-export const SignUp = () => {
+export const SignIn = ({navigation}) => {
   const [phone, setPhone] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -26,26 +25,31 @@ export const SignUp = () => {
   };
 
   return (
-    <>
-      <GoBackFloat />
-      <View style={styles.container}>
-        <Input
-          label="Enter phone number"
-          placeholder="5511988885555"
-          leftIcon={{type: 'font-awesome', name: 'phone', color: '#a6a6a6'}}
-          inputStyle={styles.inputStyle}
-          leftIconContainerStyle={{marginRight: 8}}
-          keyboardType="number-pad"
-          onChangeText={text => setPhone(text)}
-        />
+    <View style={styles.container}>
+      <Input
+        label="Enter phone number"
+        placeholder="5511988885555"
+        leftIcon={{type: 'font-awesome', name: 'phone', color: '#a6a6a6'}}
+        inputStyle={styles.inputStyle}
+        leftIconContainerStyle={{marginRight: 8}}
+        keyboardType="number-pad"
+        onChangeText={text => setPhone(text)}
+      />
+      <View style={styles.buttonContainer}>
         <Button
-          title="Submit"
+          title="Ask for code"
           type="solid"
           containerStyle={styles.buttonStyle}
           onPress={handleSubmit}
           loading={loading}
         />
+        <Button
+          title="create an account"
+          type="clear"
+          style={styles.createButton}
+          onPress={() => navigation.navigate('SignUp')}
+        />
       </View>
-    </>
+    </View>
   );
 };
