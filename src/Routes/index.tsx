@@ -2,13 +2,26 @@ import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {SignIn} from '../screens/SignIn';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {SignUp} from '../screens/SignUp';
 import {StatusBar} from 'react-native';
 
 // import { Container } from './styles';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+};
+
+export type NavigationProps = NativeStackScreenProps<RootStackParamList>;
+
+export type NavigationPropHooks = StackNavigationProp<RootStackParamList>;
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const {Navigator, Screen} = Stack;
 
 const Routes: React.FC = () => {
