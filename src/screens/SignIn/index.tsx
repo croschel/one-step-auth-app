@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {Button, Input} from 'react-native-elements';
-import {View} from 'react-native';
+import React, { useState } from 'react';
+import { Button, Input } from 'react-native-elements';
+import { View } from 'react-native';
 
-import {styles} from './styles';
-import {firebaseApi} from '../../services/axios';
+import { styles } from './styles';
+import { firebaseApi } from '../../services/axios';
 import ModalError from '../../Components/ModalError';
-import {NavigationProps} from '../../Routes';
+import { NavigationProps } from '../../Routes';
 
-export const SignIn = ({navigation}: NavigationProps) => {
+export const SignIn = ({ navigation }: NavigationProps) => {
   const [phone, setPhone] = useState<string>('');
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,7 +31,7 @@ export const SignIn = ({navigation}: NavigationProps) => {
       }, 120000);
     } catch (err) {
       console.log({
-        error: {title: 'The user could not be created', description: err},
+        error: { title: 'The user could not be created', description: err },
       });
       setShowModal(true);
       setLoading(false);
@@ -39,14 +39,19 @@ export const SignIn = ({navigation}: NavigationProps) => {
   };
 
   const onCheckPassCode = async () => {
+    setLoading(true);
     try {
-      await firebaseApi.post('verifyOneTimePass', {
+      const response = await firebaseApi.post('verifyOneTimePass', {
         phone,
-        code,
+        code: Number(code),
       });
+      const { token } = response.data;
+      if (token) {
+        navigation.push('Home');
+      }
     } catch (error) {
       console.log({
-        error: {title: 'The user could not be created', description: error},
+        error: { title: 'The user could not be signed', description: error },
       });
       setLoading(false);
     }
@@ -57,9 +62,9 @@ export const SignIn = ({navigation}: NavigationProps) => {
       <Input
         label="Enter phone number"
         placeholder="5511988885555"
-        leftIcon={{type: 'font-awesome', name: 'phone', color: '#a6a6a6'}}
+        leftIcon={{ type: 'font-awesome', name: 'phone', color: '#a6a6a6' }}
         inputStyle={styles.inputStyle}
-        leftIconContainerStyle={{marginRight: 8}}
+        leftIconContainerStyle={{ marginRight: 8 }}
         keyboardType="number-pad"
         onChangeText={text => setPhone(text)}
       />
@@ -68,11 +73,11 @@ export const SignIn = ({navigation}: NavigationProps) => {
           label="Enter your code"
           placeholder="xxxx"
           maxLength={4}
-          leftIcon={{type: 'font-awesome', name: 'hashtag', color: '#a6a6a6'}}
+          leftIcon={{ type: 'font-awesome', name: 'hashtag', color: '#a6a6a6' }}
           inputStyle={styles.inputStyle}
-          leftIconContainerStyle={{marginRight: 8}}
+          leftIconContainerStyle={{ marginRight: 8 }}
           keyboardType="number-pad"
-          onChangeText={text => setPhone(text)}
+          onChangeText={text => setCode(text)}
         />
       )}
       <View style={styles.buttonContainer}>
@@ -97,7 +102,7 @@ export const SignIn = ({navigation}: NavigationProps) => {
           title="create an account"
           type="clear"
           style={styles.createButton}
-          onPress={() => navigation.navigate({key: 'SignUp', name: 'SignUp'})}
+          onPress={() => navigation.navigate({ key: 'SignUp', name: 'SignUp' })}
         />
       </View>
       <ModalError
