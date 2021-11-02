@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input } from 'react-native-elements';
 import { View } from 'react-native';
-
+import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { styles } from './styles';
 import { firebaseApi } from '../../services/axios';
 import ModalError from '../../Components/ModalError';
@@ -47,6 +47,9 @@ export const SignIn = ({ navigation }: NavigationProps) => {
       });
       const { token } = response.data;
       if (token) {
+        const auth = getAuth();
+        const responseSign = await signInWithCustomToken(auth, token);
+        console.log(responseSign);
         navigation.push('Home');
       }
     } catch (error) {

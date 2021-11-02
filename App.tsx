@@ -1,6 +1,7 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import Routes from './src/Routes';
+import './src/services/firebase';
 
 const App = () => {
   return (
@@ -13,5 +14,5 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, justifyContent: 'center', backgroundColor: '#0f1f0f'},
+  container: { flex: 1, justifyContent: 'center', backgroundColor: '#0f1f0f' },
 });
